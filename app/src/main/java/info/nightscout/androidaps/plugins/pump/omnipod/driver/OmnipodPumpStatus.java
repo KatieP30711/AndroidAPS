@@ -28,7 +28,7 @@ import info.nightscout.androidaps.utils.sharedPreferences.SP;
 @Singleton
 public class OmnipodPumpStatus extends PumpStatus {
 
-    private final ResourceHelper resourceHelper;
+    //private final ResourceHelper resourceHelper;
     private final SP sp;
     private final RileyLinkUtil rileyLinkUtil;
     private final RxBusWrapper rxBus;
@@ -70,12 +70,11 @@ public class OmnipodPumpStatus extends PumpStatus {
     private PumpDeviceState pumpDeviceState;
 
     @Inject
-    public OmnipodPumpStatus(ResourceHelper resourceHelper,
-                             info.nightscout.androidaps.utils.sharedPreferences.SP sp,
+    public OmnipodPumpStatus(info.nightscout.androidaps.utils.sharedPreferences.SP sp,
                              RxBusWrapper rxBus,
                              RileyLinkUtil rileyLinkUtil) {
         super(PumpType.Insulet_Omnipod);
-        this.resourceHelper = resourceHelper;
+        //this.resourceHelper = resourceHelper;
         this.sp = sp;
         this.rxBus = rxBus;
         this.rileyLinkUtil = rileyLinkUtil;

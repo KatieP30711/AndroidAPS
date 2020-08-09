@@ -43,6 +43,7 @@ public class RileyLinkOmnipodService extends RileyLinkService {
     @Inject OmnipodPumpStatus omnipodPumpStatus;
     @Inject OmnipodUtil omnipodUtil;
     @Inject OmnipodUIPostprocessor omnipodUIPostprocessor;
+    @Inject AapsPodStateManager aapsPodStateManager;
 
     private static RileyLinkOmnipodService instance;
 
@@ -109,15 +110,14 @@ public class RileyLinkOmnipodService extends RileyLinkService {
     private void initializeErosOmnipodManager() {
         AapsOmnipodManager instance = AapsOmnipodManager.getInstance();
         if (instance == null) {
-            PodStateManager podStateManager = new AapsPodStateManager(injector);
-            podStateManager.loadPodState();
-            omnipodUtil.setPodStateManager(podStateManager);
+            //PodStateManager podStateManager = new AapsPodStateManager(injector);
+            aapsPodStateManager.loadPodState();
 
             OmnipodCommunicationManager omnipodCommunicationService = new OmnipodCommunicationManager(injector, rfspy);
             //omnipodCommunicationService.setPumpStatus(omnipodPumpStatus);
             this.omnipodCommunicationManager = omnipodCommunicationService;
 
-            aapsOmnipodManager = new AapsOmnipodManager(omnipodCommunicationService, podStateManager, omnipodPumpStatus,
+            aapsOmnipodManager = new AapsOmnipodManager(omnipodCommunicationService, aapsPodStateManager, omnipodPumpStatus,
                     omnipodUtil, aapsLogger, rxBus, sp, resourceHelper, injector, activePlugin);
 
             omnipodUIComm = new OmnipodUIComm(injector, aapsLogger, omnipodUtil, omnipodUIPostprocessor, aapsOmnipodManager);
