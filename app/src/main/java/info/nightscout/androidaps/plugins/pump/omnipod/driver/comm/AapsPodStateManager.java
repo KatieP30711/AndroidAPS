@@ -9,6 +9,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import javax.inject.Inject;
+
+import dagger.android.HasAndroidInjector;
 import info.nightscout.androidaps.R;
 import info.nightscout.androidaps.events.Event;
 import info.nightscout.androidaps.events.EventRefreshOverview;
@@ -29,44 +32,48 @@ import info.nightscout.androidaps.utils.sharedPreferences.SP;
 
 public class AapsPodStateManager extends PodStateManager {
 
-    private final AAPSLogger aapsLogger;
-    private final SP sp;
-    private final OmnipodUtil omnipodUtil;
-    private final OmnipodPumpStatus omnipodPumpStatus;
-    private final RxBusWrapper rxBus;
-    private final ResourceHelper resourceHelper;
+    @Inject SP sp;
+    @Inject OmnipodUtil omnipodUtil;
+    @Inject OmnipodPumpStatus omnipodPumpStatus;
+    @Inject RxBusWrapper rxBus;
+    @Inject ResourceHelper resourceHelper;
 
-    public AapsPodStateManager(AAPSLogger aapsLogger, SP sp, OmnipodUtil omnipodUtil,
-                               OmnipodPumpStatus omnipodPumpStatus, RxBusWrapper rxBus,
-                               ResourceHelper resourceHelper) {
-        super(aapsLogger);
-
-        if (aapsLogger == null) {
-            throw new IllegalArgumentException("aapsLogger can not be null");
-        }
-        if (sp == null) {
-            throw new IllegalArgumentException("sp can not be null");
-        }
-        if (omnipodUtil == null) {
-            throw new IllegalArgumentException("omnipodUtil can not be null");
-        }
-        if (omnipodPumpStatus == null) {
-            throw new IllegalArgumentException("omnipodPumpStatus can not be null");
-        }
-        if (rxBus == null) {
-            throw new IllegalArgumentException("rxBus can not be null");
-        }
-        if (resourceHelper == null) {
-            throw new IllegalArgumentException("resourceHelper can not be null");
-        }
-
-        this.aapsLogger = aapsLogger;
-        this.sp = sp;
-        this.omnipodUtil = omnipodUtil;
-        this.omnipodPumpStatus = omnipodPumpStatus;
-        this.rxBus = rxBus;
-        this.resourceHelper = resourceHelper;
+    public AapsPodStateManager(HasAndroidInjector androidInjector) {
+        super(androidInjector);
     }
+
+
+//    public AapsPodStateManager(AAPSLogger aapsLogger, SP sp, OmnipodUtil omnipodUtil,
+//                               OmnipodPumpStatus omnipodPumpStatus, RxBusWrapper rxBus,
+//                               ResourceHelper resourceHelper) {
+//        super(aapsLogger);
+//
+//        if (aapsLogger == null) {
+//            throw new IllegalArgumentException("aapsLogger can not be null");
+//        }
+//        if (sp == null) {
+//            throw new IllegalArgumentException("sp can not be null");
+//        }
+//        if (omnipodUtil == null) {
+//            throw new IllegalArgumentException("omnipodUtil can not be null");
+//        }
+//        if (omnipodPumpStatus == null) {
+//            throw new IllegalArgumentException("omnipodPumpStatus can not be null");
+//        }
+//        if (rxBus == null) {
+//            throw new IllegalArgumentException("rxBus can not be null");
+//        }
+//        if (resourceHelper == null) {
+//            throw new IllegalArgumentException("resourceHelper can not be null");
+//        }
+//
+//        this.aapsLogger = aapsLogger;
+//        this.sp = sp;
+//        this.omnipodUtil = omnipodUtil;
+//        this.omnipodPumpStatus = omnipodPumpStatus;
+//        this.rxBus = rxBus;
+//        this.resourceHelper = resourceHelper;
+//    }
 
     @Override
     protected String readPodState() {

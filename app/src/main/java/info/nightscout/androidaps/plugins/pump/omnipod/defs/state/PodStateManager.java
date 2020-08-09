@@ -16,6 +16,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import dagger.android.HasAndroidInjector;
 import info.nightscout.androidaps.logging.AAPSLogger;
 import info.nightscout.androidaps.logging.LTag;
 import info.nightscout.androidaps.plugins.pump.omnipod.comm.message.response.StatusResponse;
@@ -33,12 +36,12 @@ import info.nightscout.androidaps.utils.DateUtil;
 
 public abstract class PodStateManager {
 
-    private final AAPSLogger aapsLogger;
+    @Inject protected AAPSLogger aapsLogger;
     private final Gson gsonInstance;
     private PodState podState;
 
-    public PodStateManager(AAPSLogger aapsLogger) {
-        this.aapsLogger = aapsLogger;
+    public PodStateManager(HasAndroidInjector androidInjector) {
+        androidInjector.androidInjector().inject(this);
         this.gsonInstance = createGson();
     }
 
